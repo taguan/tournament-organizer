@@ -1,1 +1,1 @@
-# tournament-organizer
+tournament organizer
