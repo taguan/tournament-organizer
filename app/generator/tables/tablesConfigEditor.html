@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-lg-8">
+        <form class="form-inline">
+            <div class="form-group" ng-class="{'has-error' : error}">
+                <label for="tablesConfigCount">Nombre de tables</label>
+                <input ng-model="tablesConfig.count" type="text" class="form-control" id="tablesConfigCount">
+            </div>
+            <button class="btn btn-success" ng-click="saveConfig(tablesConfig)">Save</button>
+        </form>
+    </div>
+</div>

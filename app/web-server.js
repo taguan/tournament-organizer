@@ -17,6 +17,7 @@ function main(argv) {
     new HttpServer({
         'GET':createServlet(StaticServlet),
         'POST':createServlet(StaticServlet),
+        'PUT':createServlet(StaticServlet),
         'HEAD':createServlet(StaticServlet)
     }).start(Number(argv[2]) || DEFAULT_PORT);
 }
@@ -107,7 +108,7 @@ StaticServlet.prototype.handleRequest = function (req, res) {
     if (parts[parts.length - 1].charAt(0) === '.')
         return self.sendForbidden_(req, res, path);
 
-    if (req.method === 'POST') {
+    if (req.method === 'POST' || req.method === 'PUT') {
         if (self.attemptingToAccessOutsideLocalAppPath(parts)) {
             return self.sendForbidden_(req, res, path);
         }

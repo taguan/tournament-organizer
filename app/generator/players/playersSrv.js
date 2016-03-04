@@ -20,7 +20,7 @@ angular.module('app').factory('genPlayers', ['Restangular', '$q', function(Resta
             return deferred.promise;
         },
         create: function(name, rank){
-            var player = {name : name, rank : rank};
+            var player = {name : name, rank : rank.toUpperCase()};
             if(this._getPlayerPosition(player) > -1) return;
             this._players.push(player);
             this._all.post(this._players);
