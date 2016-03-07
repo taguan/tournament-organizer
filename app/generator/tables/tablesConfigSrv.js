@@ -15,6 +15,12 @@ angular.module('app').factory('tablesConfigSrv', ['Restangular', 'isPositiveNumb
             return this._first.get().then(function(config){
                 that.instance = config;
                 return config;
+            }, function(){
+                var config = {id : 1, count : 0};
+                that._first.count = 0;
+                that._first.save();
+                that.instance = config;
+                return config;
             });
         }
 

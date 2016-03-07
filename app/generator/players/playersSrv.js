@@ -16,6 +16,9 @@ angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Re
             this._allP.getList().then(function(playersResp){
                 that.all = playersResp;
                 deferred.resolve(playersResp);
+            }, function(){
+                that.all = [];
+                deferred.resolve(that.all);
             });
             return deferred.promise;
         },

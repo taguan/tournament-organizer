@@ -122,8 +122,13 @@ StaticServlet.prototype.handleRequest = function (req, res) {
 StaticServlet.prototype.findAndSendTarget = function(req, path, res, self) {
     fs.stat(path, function (err, stat) {
 
-        if (err && path.indexOf('app/') >= 0)
+        if (err && path.indexOf('data/') >= 0){
+            if (path.indexOf('.json') == -1) {
+                return self.findAndSendTarget(req, path + ".json", res, self);
+            }
             return self.sendMissing_(req, res, path);
+        }
+
         else if (err) {
 
             if (path.indexOf('.json') == -1) {

@@ -16,7 +16,11 @@ angular.module('app').factory('groupsConfigsSrv', ['Restangular', '$q', 'isPosit
             this._allP.getList().then(function(configs){
                 that.all = configs;
                 deferred.resolve(configs);
+            }, function(){
+                that.all = [];
+                deferred.resolve(that.all);
             });
+
             return deferred.promise;
         },
         create: function(nbrPlayers, nbrGroups){
