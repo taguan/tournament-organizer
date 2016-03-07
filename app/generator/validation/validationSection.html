@@ -1,48 +1,23 @@
-<div class="row" ng-show="validation.validationErrors">
-    <h3>Summary</h3>
-    <div class="col-lg-8 bg-danger">
-        <ul ng-repeat="validationError in validation.validationErrors">
-            <li>{{validationError}}</li>
-        </ul>
+<img src="../../styles/loader.gif" ng-show="validation.inProgress"/>
+
+<div ng-hide="validation.inProgress">
+    <div class="row" ng-hide="validation.isValid">
+        <h3>Validation</h3>
+        <div class="col-lg-8 bg-danger">
+            <ul ng-repeat="validationError in validation.validationErrors">
+                <li>{{validationError}}</li>
+            </ul>
+        </div>
     </div>
-</div>
-<div class="container" ng-hide="validation.validationErrors">
-    <!--<div class="row">-->
-        <!--<h3>Summary</h3>-->
-        <!--<div class="col-lg-8">-->
-            <!--<div class="panel panel-default">-->
-                <!--<div class="panel-heading">Number of players</div>-->
-                <!--<div class="panel-body">-->
-                    <!--{{nbrPlayers}}-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="panel panel-default">-->
-                <!--<div class="panel-heading">Number of tables</div>-->
-                <!--<div class="panel-body">-->
-                    <!--{{nbrTables}}-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="panel panel-default">-->
-                <!--<div class="panel-heading">Group summary</div>-->
-                <!--<div class="panel-body">-->
-                    <!--<ul ng-repeat="groupsConfig in groupsConfig | orderBy 'nbrPlayers'">-->
-                        <!--<li>{{nbrGroups}} groups of {{nbrPlayers}} players</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row">-->
-        <!--<h3>Generation</h3>-->
-        <!--<div class="col-lg-8">-->
-            <!--<div class="panel panel-danger">-->
-                <!--<div class="panel-heading">Are you sure you want to generate the tournament ?</div>-->
-                <!--<div class="panel-body">-->
-                    <!--It won't be possible to modify the configuration anymore !<br>-->
-                    <!--<br>-->
-                    <!--<button class="btn btn-default" ng-click="generateTournament()">Generate tournament</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="container" ng-show="validation.isValid">
+        <div class="row">
+            <h3>Validation</h3>
+            <div class="col-lg-8 bg-success">
+                <p>Tournament configuration is valid !</p>
+            </div>
+        </div>
+        <trnmt-gen-summary></trnmt-gen-summary>
+        <trnmt-generate-section></trnmt-generate-section>
+    </div>
+
 </div>

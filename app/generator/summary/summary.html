@@ -1,0 +1,25 @@
+<div class="row">
+    <h3>Summary</h3>
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Number of players</div>
+            <div class="panel-body">
+                {{summary.players.all.length}}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Number of tables</div>
+            <div class="panel-body">
+                {{summary.tablesConfigs.instance.count}}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Group summary</div>
+            <div class="panel-body">
+                <ul ng-repeat="groupsConfig in summary.groupsConfigs.all | orderBy: 'nbrPlayers'">
+                    <li>{{groupsConfig.nbrGroups}} groups of {{groupsConfig.nbrPlayers}} players</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
