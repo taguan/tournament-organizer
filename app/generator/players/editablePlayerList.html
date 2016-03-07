@@ -10,11 +10,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="player in players">
+            <tr ng-repeat="player in players.all | orderBy: 'rank'">
                 <td>{{$index + 1}}</td>
                 <td>{{player.name}}</td>
                 <td>{{player.rank}}</td>
-                <td><a href="" ng-click="removePlayer(player)">X</a> </td>
+                <td><button type="button" class="close" aria-label="Close" ng-click="removePlayer(player)"><span aria-hidden="true">&times;</span></button></td>
             </tr>
             </tbody>
         </table>
@@ -23,7 +23,7 @@
 </div>
 <div class="row">
     <div class="col-lg-8">
-        <form class="form-inline">
+        <form class="form-inline" ng-class="{'has-error' : error}">
             <div class="form-group">
                 <label class="sr-only" for="genNameInput">Name</label>
                 <input ng-model="name" type="text" class="form-control" id="genNameInput" placeholder="Name">

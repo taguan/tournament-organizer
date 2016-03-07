@@ -1,10 +1,10 @@
-angular.module('app').factory('genPlayers', ['Restangular', '$q', function(Restangular, $q){
+angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Restangular, $q){
     return {
-        _players: [],
-        _all: Restangular.all('players'),
+        all: [],
+        _allP: Restangular.all('players'),
         _getPlayerPosition: function(player){
-            for(var i = 0; i < this._players.length; i++){
-                if(this._players[i].name === player.name){
+            for(var i = 0; i < this.all.length; i++){
+                if(this.all[i].name === player.name){
                     return i;
                 }
             }
@@ -13,23 +13,25 @@ angular.module('app').factory('genPlayers', ['Restangular', '$q', function(Resta
         findAll: function() {
             var deferred = $q.defer();
             var that = this;
-            this._all.getList().then(function(playersResp){
-                that._players = playersResp;
+            this._allP.getList().then(function(playersResp){
+                that.all = playersResp;
                 deferred.resolve(playersResp);
             });
             return deferred.promise;
         },
         create: function(name, rank){
+            if(!name || !rank) return false;
             var player = {name : name, rank : rank.toUpperCase()};
-            if(this._getPlayerPosition(player) > -1) return;
-            this._players.push(player);
-            this._all.post(this._players);
+            if(this._getPlayerPosition(player) > -1) return false;
+            this.all.push(player);
+            this._allP.post(this.all);
+            return true;
         },
         remove: function(player){
             var pos = this._getPlayerPosition(player);
             if(pos === -1) return;
-            this._players.splice(pos, 1);
-            this._all.post(this._players);
+            this.all.splice(pos, 1);
+            this._allP.post(this.all);
         }
     }
 }]);

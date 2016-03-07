@@ -6,14 +6,8 @@ angular.module('app').config(['RestangularProvider', function(RestangularProvide
     RestangularProvider.setBaseUrl('/data');
 }]);
 
-angular.module('app').config(['$routeProvider', function($routeProvider){
-    $routeProvider.when('/generator', {
-        templateUrl: '/generator/generator.html'
-    }).when('/groups', {
-        templateUrl: '/groups/groups.html'
-    }).when('/brackets', {
-        templateUrl: '/brackets/brackets.html'
-    }).otherwise({
-        redirectTo: '/generator'
-    });
-}]);
+angular.module('app').value('isPositiveNumber', function(nbrStr){
+    if(!nbrStr) return false;
+    var nbr = parseInt(nbrStr);
+    return nbr && nbr > 0;
+});

@@ -37,7 +37,22 @@
         </div>
         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="panel-body">
-                group stuff
+                <trnmt-groups-configs-editor></trnmt-groups-configs-editor>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingFour">
+            <h4 class="panel-title">
+                <a ng-click="triggerValidation()" class="collapsed" role="button" data-toggle="collapse"
+                   data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Validation and generation
+                </a>
+            </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+            <div class="panel-body">
+                <trnmt-validation-section></trnmt-validation-section>
             </div>
         </div>
     </div>

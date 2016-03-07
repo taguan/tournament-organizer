@@ -3,6 +3,6 @@ angular.module('app').directive('trnmtTablesConfigEditor', function() {
         restrict: 'E',
         scope: {},
         templateUrl: 'generator/tables/tablesConfigEditor.html',
-        controller: 'genTablesConfigCtrl'
+        controller: 'tablesConfigCtrl'
     };
 });

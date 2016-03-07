@@ -1,11 +1,15 @@
-angular.module('app').controller('genPlayersCtrl', ['$scope', 'genPlayers', function($scope, genPlayers){
-    genPlayers.findAll().then(function(players){
-        $scope.players = players;
-    });
+angular.module('app').controller('genPlayersCtrl', ['$scope', 'genPlayersSrv', function($scope, genPlayersSrv){
+    $scope.error = false;
+    genPlayersSrv.findAll();
+    $scope.players = genPlayersSrv;
     $scope.addPlayer = function(name, rank){
-        genPlayers.create(name, rank);
+        $scope.error = !genPlayersSrv.create(name, rank);
+        if(!$scope.error){
+            $scope.name = '';
+            $scope.rank = '';
+        }
     };
     $scope.removePlayer = function(player){
-        genPlayers.remove(player);
+        genPlayersSrv.remove(player);
     }
 }]);

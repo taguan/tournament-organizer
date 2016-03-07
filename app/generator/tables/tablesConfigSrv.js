@@ -1,9 +1,7 @@
-angular.module('app').factory('genTablesConfigSrv', ['Restangular', function(Restangular){
+angular.module('app').factory('tablesConfigSrv', ['Restangular', 'isPositiveNumber', function(Restangular, isPositiveNumber){
     Restangular.extendModel('tablesConfig', function(model){
        model.validateAndSave = function(){
-           if(!this.count) return false;
-           var countAsInt = parseInt(this.count);
-           if(!countAsInt || countAsInt < 1) return false;
+           if(!isPositiveNumber(this.count)) return false;
            this.save();
            return true;
        };
@@ -11,8 +9,13 @@ angular.module('app').factory('genTablesConfigSrv', ['Restangular', function(Res
     });
     return {
         _first: Restangular.one('tablesConfig', 1),
-        findConfig: function(){
-            return this._first.get();
+        instance: null,
+        findInstance: function(){
+            var that = this;
+            return this._first.get().then(function(config){
+                that.instance = config;
+                return config;
+            });
         }
 
     }
