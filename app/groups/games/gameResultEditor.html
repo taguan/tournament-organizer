@@ -1,0 +1,14 @@
+<button class="btn btn-primary" ng-click="toggleModal()">Enter result</button>
+<trnmt-modal title='{{"Enter game result " +  game.p1.name + " against " + game.p2.name}}' visible="showModal">
+    <form role="form">
+        <div class="form-group">
+            <label for="p1Result">Number of sets won by {{game.p1.name}}</label>
+            <input type="text" class="form-control" id="p1Result" ng-model="results.p1" />
+        </div>
+        <div class="form-group">
+            <label for="p2Result">Number of sets won by {{game.p2.name}}</label>
+            <input type="text" class="form-control" id="p2Result" ng-model="results.p2" />
+        </div>
+        <button class="btn btn-default" ng-click="submitResults(results)">Submit</button>
+    </form>
+</trnmt-modal>

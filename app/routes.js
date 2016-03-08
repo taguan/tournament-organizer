@@ -3,7 +3,8 @@ angular.module('app').config(['$routeProvider', function($routeProvider){
         templateUrl: '/generator/generator.html',
         controller: 'generatorCtrl'
     }).when('/groups', {
-        templateUrl: '/groups/groups.html'
+        templateUrl: '/groups/groups.html',
+        controller: 'groupsCtrl'
     }).when('/brackets', {
         templateUrl: '/brackets/brackets.html'
     }).otherwise({

@@ -2,6 +2,7 @@ angular.module('app').factory('tablesConfigSrv', ['Restangular', 'isPositiveNumb
     Restangular.extendModel('tablesConfig', function(model){
        model.validateAndSave = function(){
            if(!isPositiveNumber(this.count)) return false;
+           this.count = parseInt(this.count);
            this.save();
            return true;
        };

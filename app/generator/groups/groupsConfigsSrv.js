@@ -24,8 +24,10 @@ angular.module('app').factory('groupsConfigsSrv', ['Restangular', '$q', 'isPosit
             return deferred.promise;
         },
         create: function(nbrPlayers, nbrGroups){
-            if(!isPositiveNumber(nbrPlayers) || !isPositiveNumber(nbrGroups)) return false;
-            var groupsConfig = {nbrPlayers : nbrPlayers, nbrGroups : nbrGroups};
+            if(!isPositiveNumber(nbrGroups)) return false;
+            var nbrGroupsInt = parseInt(nbrGroups);
+            if(nbrPlayers < 2 || nbrPlayers > 8) return false;
+            var groupsConfig = {nbrPlayers : nbrPlayers, nbrGroups : nbrGroupsInt};
             if(this._getConfigPosition(groupsConfig) > -1) return false;
             this.all.push(groupsConfig);
             this._allP.post(this.all);

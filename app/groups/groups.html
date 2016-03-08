@@ -1,1 +1,11 @@
-groups page
+
+<div class="container">
+    <div class="row">
+        <div class="list-group col-lg-2">
+            <button type="button" class="list-group-item" ng-click="selectGroup(group)" ng-repeat="group in groups.all | orderBy: 'number'">Group {{group.number}}</button>
+        </div>
+        <div class="col-lg-10" ng-show="selection.group">
+            <trnmt-group-section group="selection.group"></trnmt-group-section>
+        </div>
+    </div>
+</div>

@@ -29,11 +29,13 @@ angular.module('app').factory('generationSrv', ['groupsSrv', 'genPlayersSrv', 'g
                 }
                 return this._groupIndex;
             },
-            generateTournament: function(){
+            generateGroups: function(){
                 this._initializeGroups();
                 this._groupIndex = 0;
                 var players = playersSrv.all.sort(function(a, b){
-                   return a.rank < b.rank;
+                    if (a.rank < b.rank) return -1;
+                    if (a.rank > b.rank) return 1;
+                    return 0;
                 });
                 for(var i = 0; i < players.length; i++){
                     this._groups[this._groupIndex].players.push(players[i]);

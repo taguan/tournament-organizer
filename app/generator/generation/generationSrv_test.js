@@ -1,4 +1,4 @@
-describe('generateTournament', function(){
+describe('generateGroups', function(){
     beforeEach(module('app'));
     beforeEach(module({
         'groupsSrv': {
@@ -31,8 +31,8 @@ describe('generateTournament', function(){
         },
         'groupsConfigsSrv': {
             all: [
-                {nbrPlayers: "4", nbrGroups: "2"},
-                {nbrPlayers: "3", nbrGroups: "3"}
+                {nbrPlayers: 4, nbrGroups: 2},
+                {nbrPlayers: 3, nbrGroups: 3}
             ]
 
         }
@@ -47,10 +47,20 @@ describe('generateTournament', function(){
     }));
 
     it('should generate fully attributed groups', function () {
-        service.generateTournament();
+        service.generateGroups();
         expect(groupService.createdGroups.length).toBe(5);
-        for(var i = 0; i < 3; i++){
-            expect(groupService.createdGroups[i].players.length.toString()).toBe(groupService.createdGroups[i].nbrOfPlayers);
+        for(var i = 0; i < 5; i++){
+            expect(groupService.createdGroups[i].players.length).toBe(groupService.createdGroups[i].nbrOfPlayers);
+        }
+    });
+
+    it('should generate groups sorted by player rank', function () {
+        service.generateGroups();
+        for(var i = 0; i < 5; i++){
+            var groupPlayers = groupService.createdGroups[i].players;
+            for(var j = 0; j < groupPlayers.length -1; j++){
+                expect(groupPlayers[j].rank).not.toBeGreaterThan(groupPlayers[j+1].rank);
+            }
         }
     });
 
