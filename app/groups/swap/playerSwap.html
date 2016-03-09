@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">Swap two players</div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label>Select first player</label>
+                <select class="form-control" ng-options='group as ("Group " + group.number) for group in groups.all' ng-model="p1.group">
+                    <option value="">Choose group</option>
+                </select>
+            </div>
+            <div class="form-group" ng-show="p1.group">
+                <select class="form-control" ng-options='player as (player.name + " " + player.rank) for player in p1.group.players' ng-model="p1.player">
+                    <option value="">Choose player</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Select second player</label>
+                <select class="form-control" ng-options='group as ("Group " + group.number) for group in groups.all' ng-model="p2.group">
+                    <option value="">Choose group</option>
+                </select>
+            </div>
+            <div class="form-group" ng-show="p2.group">
+                <select class="form-control" ng-options='player as (player.name + " " + player.rank) for player in p2.group.players' ng-model="p2.player">
+                    <option value="">Choose player</option>
+                </select>
+            </div>
+            <button class="btn btn-default" ng-click="swapPlayers(p1.group, p1.player, p2.group, p2.player)">Swap players</button>
+        </form>
+    </div>
+</div>
