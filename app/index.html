@@ -15,26 +15,7 @@
 </head>
 <body ng-app="app">
 <div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Tournament organizer</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="#/generator">Generator</a></li>
-          <li><a href="#/groups">Groups</a></li>
-          <li><a href="#/brackets">Final bracket</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <trnmt-nav></trnmt-nav>
   <ng-view></ng-view>
 </div>
 
@@ -52,6 +33,8 @@
 <script src="bower_components/restangular/dist/restangular.js"></script>
 <script src="app.js"></script>
 <script src="modal.js"></script>
+<script src="navbar/navbarCtrl.js"></script>
+<script src="navbar/navbar.js"></script>
 <script src="generator/generatorCtrl.js"></script>
 <script src="generator/players/editablePlayerList.js"></script>
 <script src="generator/players/playersSrv.js"></script>

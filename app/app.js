@@ -11,3 +11,4 @@ angular.module('app').value('isPositiveNumber', function(nbrStr){
     var nbr = parseInt(nbrStr);
     return nbr && nbr > 0;
 });
+

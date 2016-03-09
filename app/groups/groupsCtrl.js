@@ -8,5 +8,5 @@ angular.module('app').controller('groupsCtrl', ['$scope', 'groupsSrv', function(
     $scope.selectGroup = function(group){
         $scope.selection.group = group;
         $scope.selection.groupNumber = group.number;
-    }
+    };
 }]);
