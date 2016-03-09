@@ -12,6 +12,7 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "lodash": "^4.6.1",
-    "restangular": "^1.5.2"
+    "restangular": "^1.5.2",
+    "jquery-bracket": "^0.7.3"
   }
 }
