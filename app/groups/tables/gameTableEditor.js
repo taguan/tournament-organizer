@@ -2,8 +2,7 @@ angular.module('app').directive('trnmtGameTableEditor', function() {
     return {
         restrict: 'E',
         scope: {
-            game: '=',
-            group: '='
+            game: '='
         },
         templateUrl: 'groups/tables/gameTableEditor.html',
         controller: 'gameTableEditorCtrl'

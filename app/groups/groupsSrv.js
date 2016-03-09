@@ -90,6 +90,9 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
                 }
             }
             gamesSrv.modifyResults(game, p1Result, p2Result);
+            if(game.played){
+                this.freeTable(game);
+            }
             this.save();
         },
         swapPlayers: function(group1, player1, group2, player2){
@@ -101,7 +104,7 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             this._replacePlayerInGroup(group2, p2Name, p1Name, p1Rank);
             this.save();
         },
-        bookTable: function(group, game, tableNumber){
+        bookTable: function(game, tableNumber){
             var previousTableNumber = game.tableNumber;
             if(previousTableNumber){
                 tablesSrv.freeTable(previousTableNumber);
@@ -111,8 +114,10 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             tablesSrv.save();
             this.save();
         },
-        freeTable: function(group, game){
-            tablesSrv.freeTable(game.tableNumber);
+        freeTable: function(game){
+            if(game.tableNumber){
+                tablesSrv.freeTable(game.tableNumber);
+            }
             game.tableNumber = null;
             tablesSrv.save();
             this.save();

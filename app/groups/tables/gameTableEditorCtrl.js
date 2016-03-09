@@ -6,11 +6,11 @@ angular.module('app').controller('gameTableEditorCtrl', ['$scope', 'groupsSrv', 
         $scope.showModal = !$scope.showModal;
     };
     $scope.bookTable = function(tableNumber) {
-        groupsSrv.bookTable($scope.group, $scope.game, tableNumber);
+        groupsSrv.bookTable($scope.game, tableNumber);
         $scope.toggleModal();
     };
     $scope.freeTable = function(){
-        groupsSrv.freeTable($scope.group, $scope.game);
+        groupsSrv.freeTable($scope.game);
         $scope.toggleModal();
     };
 }]);
