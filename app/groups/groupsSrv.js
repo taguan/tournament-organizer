@@ -1,4 +1,4 @@
-angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', function(Restangular, $q, gamesSrv){
+angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'tablesSrv', function(Restangular, $q, gamesSrv, tablesSrv){
     return {
         all: [],
         _allP: Restangular.all('groups'),
@@ -29,10 +29,18 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', fun
         },
         findAll: function() {
             var deferred = $q.defer();
+            if(this.all.length > 0){
+                deferred.resolve(this.all);
+                return deferred.promise;
+            }
             var that = this;
             this._allP.getList().then(function(groupsResp){
-                that.all = groupsResp;
-                deferred.resolve(groupsResp);
+                if(that.all.length > 0){
+                    deferred.resolve(that.all);
+                } else {
+                    that.all = groupsResp;
+                    deferred.resolve(groupsResp);
+                }
             }, function(){
                 that.all = [];
                 deferred.resolve(that.all);
@@ -91,6 +99,22 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', fun
             var p2Rank = player2.rank;
             this._replacePlayerInGroup(group1, p1Name, p2Name, p2Rank);
             this._replacePlayerInGroup(group2, p2Name, p1Name, p1Rank);
+            this.save();
+        },
+        bookTable: function(group, game, tableNumber){
+            var previousTableNumber = game.tableNumber;
+            if(previousTableNumber){
+                tablesSrv.freeTable(previousTableNumber);
+            }
+            game.tableNumber = tableNumber;
+            tablesSrv.bookTable(tableNumber);
+            tablesSrv.save();
+            this.save();
+        },
+        freeTable: function(group, game){
+            tablesSrv.freeTable(game.tableNumber);
+            game.tableNumber = null;
+            tablesSrv.save();
             this.save();
         }
     }

@@ -9,7 +9,8 @@ angular.module('app').factory('gamesSrv', ['groupsRules', function(groupsRules){
                     "referee" : gameDef.a != 0 ? group.players[gameDef.a - 1] : null,
                     "played" : false,
                     "p1Result" : 0,
-                    "p2Result" : 0
+                    "p2Result" : 0,
+                    "tableNumber" : null
                 })
             });
         },

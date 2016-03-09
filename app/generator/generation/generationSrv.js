@@ -1,5 +1,5 @@
-angular.module('app').factory('generationSrv', ['groupsSrv', 'genPlayersSrv', 'groupsConfigsSrv',
-    function(groupsSrv, playersSrv, groupsConfigSrv){
+angular.module('app').factory('generationSrv', ['groupsSrv', 'genPlayersSrv', 'groupsConfigsSrv', 'tablesConfigSrv', 'tablesSrv',
+    function(groupsSrv, playersSrv, groupsConfigSrv, tablesConfigSrv, tablesSrv){
         return {
             _groups : [],
             _groupIndex : 0,
@@ -44,6 +44,9 @@ angular.module('app').factory('generationSrv', ['groupsSrv', 'genPlayersSrv', 'g
                     }
                 }
                 groupsSrv.create(this._groups);
+            },
+            generateTables: function(){
+                tablesSrv.generateTables(tablesConfigSrv.instance.count);
             }
         };
     }

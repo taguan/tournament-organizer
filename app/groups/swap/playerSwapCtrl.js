@@ -1,5 +1,4 @@
 angular.module('app').controller('playerSwapCtrl', ['$scope', 'groupsSrv', function($scope, groupsSrv){
-    groupsSrv.findAll();
     $scope.groups = groupsSrv;
     $scope.p1 = {
         group: null,

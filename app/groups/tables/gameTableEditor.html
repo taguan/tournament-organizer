@@ -1,0 +1,20 @@
+<button class="btn btn-primary" ng-click="toggleModal()">
+    <span ng-show="game.tableNumber">Table {{game.tableNumber}}</span>
+    <span ng-hide="game.tableNumber">No table</span>
+</button>
+<trnmt-modal title='{{"Change table for game : " +  game.p1.name + " against " + game.p2.name}}' visible="showModal">
+    <p>
+        <span ng-show="game.tableNumber">Current playing on table {{game.tableNumber}}</span>
+    </p>
+    <form role="form">
+        <div class="form-group">
+            <label for="availableTables">Available tables</label>
+            <select class="form-control" id="availableTables" ng-model="selectedTableNumber"
+                    ng-options='table.number as ("Table " + table.number) for table in tables.all | isTableFree'>
+
+            </select>
+        </div>
+        <button class="btn btn-primary" ng-click="bookTable(selectedTableNumber)">Book table</button>
+        <button class="btn btn-info" ng-show="game.tableNumber" ng-click="freeTable()">Free table</button>
+    </form>
+</trnmt-modal>
