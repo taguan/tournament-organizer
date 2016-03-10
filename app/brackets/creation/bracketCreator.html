@@ -1,0 +1,18 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Generate a new bracket
+    </div>
+    <div class="panel-body">
+        <form class="form-inline" ng-class="{'has-error' : error}">
+            <div class="form-group">
+                <label for="startPosition">Players from position </label>
+                <input ng-model="position.from" type="number" class="form-control" id="startPosition">
+            </div>
+            <div class="form-group">
+                <label for="toPosition"> to position </label>
+                <input ng-model="position.to" type="number" class="form-control" id="toPosition">
+            </div>
+            <button ng-click="generateBracket(position.from, position.to) "class="btn btn-default">Generate bracket</button>
+        </form>
+    </div>
+</div>

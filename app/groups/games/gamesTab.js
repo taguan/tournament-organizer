@@ -4,7 +4,6 @@ angular.module('app').directive('trnmtGamesTab', function() {
         scope: {
             group: '='
         },
-        templateUrl: 'groups/games/gamesTab.html',
-        controller: 'gamesTabCtrl'
+        templateUrl: 'groups/games/gamesTab.html'
     };
 });

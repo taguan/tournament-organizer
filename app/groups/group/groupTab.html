@@ -6,6 +6,7 @@
         <th>Rank</th>
         <th># Sets</th>
         <th># Games</th>
+        <th>Position</th>
     </tr>
     </thead>
     <tbody>
@@ -15,6 +16,11 @@
         <td>{{player.rank}}</td>
         <td>{{player.setCount}}</td>
         <td>{{player.gameCount}}</td>
+        <td>
+            <select ng-change="savePositions()" class="form-control" ng-model="player.position" ng-options="i for i in [] | range:1:group.nbrOfPlayers">
+
+            </select>
+        </td>
     </tr>
     </tbody>
 </table>

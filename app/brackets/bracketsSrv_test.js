@@ -3,8 +3,8 @@ describe('generateBracket', function(){
 
     var service;
 
-    beforeEach(inject(function GetDependencies(bracketSrv){
-        service = bracketSrv;
+    beforeEach(inject(function GetDependencies(bracketsSrv){
+        service = bracketsSrv;
     }));
 
     it('should generate an even bracket', function () {

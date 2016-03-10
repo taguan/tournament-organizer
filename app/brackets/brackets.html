@@ -1,3 +1,29 @@
-bracket page
+<div class="row" ng-repeat="bracket in brackets.all">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Bracket {{$index + 1}}
+        </div>
+        <div class="panel-body">
+            <trnmt-bracket bracket="bracket"></trnmt-bracket>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <trnmt-bracket-creator></trnmt-bracket-creator>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Danger zone ! This cannot be undone !
+            </div>
+            <div class="panel-body">
 
-<trnmt-bracket></trnmt-bracket>
+                <button class="btn btn-danger" ng-click="deleteBrackets()">Delete ALL brackets</button>
+            </div>
+        </div>
+    </div>
+
+</div>

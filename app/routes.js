@@ -9,7 +9,8 @@ angular.module('app').config(['$routeProvider', function($routeProvider){
         activeTab: 'groups'
     }).when('/brackets', {
         templateUrl: '/brackets/brackets.html',
-        activeTab: 'brackets'
+        activeTab: 'brackets',
+        controller: 'bracketsCtrl'
     }).otherwise({
         redirectTo: '/generator',
         controller: 'generatorCtrl',

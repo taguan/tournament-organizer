@@ -12,13 +12,13 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
         },
         _replacePlayerInGroup: function(group, playerNameBefore, playerNameAfter, playerRankAfter){
             group.games.forEach(function(game){
-               if(game.p1.name === playerNameBefore){
-                   game.p1.name = playerNameAfter;
-                   game.p1.rank = playerRankAfter;
-               } else if(game.p2.name === playerNameBefore){
-                   game.p2.name = playerNameAfter;
-                   game.p2.rank = playerRankAfter;
-               }
+                if(game.p1.name === playerNameBefore){
+                    game.p1.name = playerNameAfter;
+                    game.p1.rank = playerRankAfter;
+                } else if(game.p2.name === playerNameBefore){
+                    game.p2.name = playerNameAfter;
+                    game.p2.rank = playerRankAfter;
+                }
             });
             group.players.forEach(function(player){
                 if(player.name === playerNameBefore){
@@ -52,8 +52,9 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             this.all.forEach(function(group){
                 gamesSrv.addGamesToGroup(group);
                 group.players.forEach(function(player){
-                   player.setCount = 0;
+                    player.setCount = 0;
                     player.gameCount = 0;
+                    player.position = null;
                 });
             });
             this.save();
@@ -121,6 +122,43 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             game.tableNumber = null;
             tablesSrv.save();
             this.save();
+        },
+        getPlayersWithPosition: function(from, to){
+            var deferred = $q.defer();
+            if(from < 1 || to <= from){
+                deferred.resolve([]);
+                return deferred.promise;
+            }
+            this.findAll().then(function(groups){
+               var playersWithGroups = [];
+                groups.forEach(function(group){
+                    group.players.forEach(function(player){
+                        playersWithGroups.push({
+                            player : player,
+                            group : group
+                        });
+                    });
+                });
+                if(to > playersWithGroups.length){
+                    deferred.resolve([]);
+                }
+                else{
+                    playersWithGroups.sort(function(a, b){
+                        if(!b.player.position) return -1;
+                        if(!a.player.position) return 1;
+                        if(a.player.position < b.player.position) return -1;
+                        if(a.player.position > b.player.position) return 1;
+                        if(a.group.number < b.group.number) return -1;
+                        if(a.group.number > b.group.number) return 1;
+                        return 0;
+                    });
+                    deferred.resolve(playersWithGroups.slice(from-1, to).map(function(playerWithGroup){
+                        return playerWithGroup.player.name + " " + playerWithGroup.player.rank;
+                    })) ;
+                }
+
+            });
+            return deferred.promise;
         }
     }
 }]);
