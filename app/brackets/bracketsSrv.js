@@ -60,14 +60,22 @@ angular.module('app').factory('bracketsSrv', ['Restangular', '$q', 'groupsSrv', 
                 players.push("Bye");
             }
             var firstRoundGames = this._computeNextRound([[0,1]],2,players.length);
+            var firstGamesResults = [];
             for(i = 0; i < firstRoundGames.length; i++){
                 firstRoundGames[i][0] = players[firstRoundGames[i][0]];
                 firstRoundGames[i][1] = players[firstRoundGames[i][1]];
+                if(firstRoundGames[i][1] === 'Bye'){
+                    firstGamesResults.push([3,0]);
+                }else if(firstRoundGames[i][0] === 'Bye'){
+                    firstGamesResults.push([0, 3]);
+                } else{
+                    firstGamesResults.push([null,null]);
+                }
             }
             this.create({
                 data : {
                     teams : firstRoundGames,
-                    results: []
+                    results: firstGamesResults
                 }
             });
             return firstRoundGames;
