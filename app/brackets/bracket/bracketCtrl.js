@@ -24,5 +24,9 @@ angular.module('app').controller('bracketCtrl', [ '$scope', 'tablesSrv', functio
         $scope.playerInfo.tableNumber = tableNumber;
         tablesSrv.save();
         $scope.toggleModal();
+    };
+    $scope.modifyPlayerName = function(newPlayerName){
+        $scope.playerInfo.name = newPlayerName;
+        $scope.toggleModal();
     }
 }]);

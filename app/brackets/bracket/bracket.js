@@ -24,6 +24,7 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
                 scope.$apply(function(){
                     scope.playerInfo.tableNumber = tableNumber;
                     scope.playerInfo.name = playerName;
+                    scope.newPlayerName = playerName;
                     scope.toggleModal();
                     scope.lastCallback = callback;
                 });
@@ -49,12 +50,26 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
 
             });
 
+            scope.$watch("playerInfo.name", function(playerName){
+                if(scope.lastCallback == null){
+                    return;
+                }
+                if(playerName){
+                    var newName = playerName;
+                    if(scope.playerInfo.tableNumber > 0){
+                        newName = "(T" + scope.playerInfo.tableNumber + ") " + newName;
+                    }
+                    scope.lastCallback(newName);
+                }
+
+            });
+
             $(element).find('.bracket').bracket({
                 init : scope.bracket.data,
                 save : saveFn,
                 decorator: {
                     edit: editFn,
-                    render: function(container, name, score){container.append(name)}
+                    render: function(container, name){container.append(name)}
                 }
             });
         }

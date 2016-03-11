@@ -1,8 +1,15 @@
 <div class="bracket"></div>
-<trnmt-modal title='Manage table attribution' visible="showModal">
+<trnmt-modal title='Manage player and table attribution' visible="showModal">
     <p>
         <span ng-show="playerInfo.tableNumber">{{playerInfo.name}} currently plays on table {{playerInfo.tableNumber}}</span>
     </p>
+    <form role="form">
+        <div class="form-group">
+            <label for="availableTables">Player name</label>
+            <input type="text" class="form-control" id="playerNameInput" ng-model="newPlayerName" />
+        </div>
+        <button class="btn btn-primary" ng-click="modifyPlayerName(newPlayerName)">Modify player name</button>
+    </form>
     <form role="form">
         <div class="form-group">
             <label for="availableTables">Available tables</label>
