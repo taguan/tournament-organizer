@@ -1,0 +1,17 @@
+<div class="bracket"></div>
+<trnmt-modal title='Manage table attribution' visible="showModal">
+    <p>
+        <span ng-show="playerInfo.tableNumber">{{playerInfo.name}} currently plays on table {{playerInfo.tableNumber}}</span>
+    </p>
+    <form role="form">
+        <div class="form-group">
+            <label for="availableTables">Available tables</label>
+            <select class="form-control" id="availableTables" ng-model="selectedTableNumber"
+                    ng-options='table.number as ("Table " + table.number) for table in tables.all | isTableFree'>
+
+            </select>
+        </div>
+        <button class="btn btn-primary" ng-click="bookTable(selectedTableNumber)">Book table</button>
+        <button class="btn btn-info" ng-show="playerInfo.tableNumber" ng-click="freeTable(playerInfo.tableNumber)">Free table</button>
+    </form>
+</trnmt-modal>
