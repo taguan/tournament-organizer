@@ -21,7 +21,7 @@ angular.module('app').factory('generationSrv', ['groupsSrv', 'genPlayersSrv', 'g
                 this._groupIndex = this._groupIndex + 1;
                 if(this._groupIndex === this._groups.length){
                     this._groups.reverse();
-                    this._groupIndex = 1;
+                    this._groupIndex = 0;
                 }
                 var group = this._groups[this._groupIndex];
                 if(group.nbrOfPlayers == group.players.length){
