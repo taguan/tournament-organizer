@@ -23,17 +23,38 @@
 </div>
 <div class="row">
     <div class="col-lg-8">
-        <form class="form-inline" ng-class="{'has-error' : error}">
+        <form class="form-inline" ng-class="{'has-error' : errors.length}">
             <div class="form-group">
                 <label class="sr-only" for="genNameInput">Name</label>
-                <input ng-model="name" type="text" class="form-control" id="genNameInput" placeholder="Name">
+                <textarea ng-model="name" type="text" class="form-control" id="genNameInput" placeholder="Name (one by line)"></textarea>
             </div>
             <div class="form-group">
                 <label class="sr-only" for="genRankInput">Rank</label>
-                <input ng-model="rank" type="text" class="form-control" id="genRankInput" placeholder="Rank (ex : C0)">
+                <textarea ng-model="rank" type="text" class="form-control" id="genRankInput" placeholder="Rank (one by line)"></textarea>
             </div>
-            <button class="btn btn-success" ng-click="addPlayer(name, rank)">Add player</button>
-
+            <button class="btn btn-success" ng-click="addPlayers(name, rank)">Add player</button>
         </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8">
+        <ul class="text-danger">
+            <li ng-repeat="error in errors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Danger zone ! This cannot be undone !
+            </div>
+            <div class="panel-body">
+
+                <button class="btn btn-danger" ng-click="deletePlayers()">Delete ALL players</button>
+            </div>
+        </div>
     </div>
 </div>

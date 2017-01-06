@@ -3,7 +3,7 @@
 angular.module('app', ['restangular', 'ngRoute']);
 
 angular.module('app').config(['RestangularProvider', function(RestangularProvider){
-    RestangularProvider.setBaseUrl('/data');
+    RestangularProvider.setBaseUrl('/data/' + window.document.location.port || 80);
 }]);
 
 angular.module('app').value('isPositiveNumber', function(nbrStr){

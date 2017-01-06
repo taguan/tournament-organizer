@@ -5,5 +5,4 @@ bower_components/
 tmp
 .DS_Store
 .idea
-*.iml
-app/data/*.json
+app/data
