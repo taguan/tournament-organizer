@@ -123,42 +123,41 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             tablesSrv.save();
             this.save();
         },
-        getPlayersWithPosition: function(from, to){
+        getGroupsWithSelectedPlayersAsync: function(nbrPerGroup, startPosition){
             var deferred = $q.defer();
-            if(from < 1 || to <= from){
-                deferred.resolve([]);
-                return deferred.promise;
-            }
+            var that = this;
             this.findAll().then(function(groups){
-               var playersWithGroups = [];
-                groups.forEach(function(group){
-                    group.players.forEach(function(player){
-                        playersWithGroups.push({
-                            player : player,
-                            group : group
-                        });
-                    });
-                });
-                if(to > playersWithGroups.length){
-                    deferred.resolve([]);
-                }
-                else{
-                    playersWithGroups.sort(function(a, b){
-                        if(!b.player.position) return -1;
-                        if(!a.player.position) return 1;
-                        if(a.player.position < b.player.position) return -1;
-                        if(a.player.position > b.player.position) return 1;
-                        if(a.group.number < b.group.number) return -1;
-                        if(a.group.number > b.group.number) return 1;
-                        return 0;
-                    });
-                    deferred.resolve(playersWithGroups.slice(from-1, to).map(function(playerWithGroup){
-                        return playerWithGroup.player.name + " " + playerWithGroup.player.rank;
-                    })) ;
-                }
-
+                deferred.resolve(that.getGroupsWithSelectedPlayers(nbrPerGroup, startPosition, groups));
             });
             return deferred.promise;
+        },
+        getGroupsWithSelectedPlayers: function(nbrPerGroup, startPosition, groups){
+            var groupsWithSelectedPlayers = [];
+            groups.forEach(function(group){
+                var g = {
+                    group: group.number,
+                    players: []
+                };
+                group.players.forEach(function(player){
+                    if(player.position >= startPosition && player.position < startPosition + nbrPerGroup) {
+                        g.players.push(player);
+                    }
+                });
+                g.players.sort(function(a, b) {
+                    if(a.position < b.position) {
+                        return -1;
+                    }
+                    return 1;
+                });
+                groupsWithSelectedPlayers.push(g);
+            });
+            groupsWithSelectedPlayers.sort(function(a, b) {
+                if(a.group < b.group) {
+                    return -1;
+                }
+                return 1;
+            });
+            return groupsWithSelectedPlayers;
         }
     }
 }]);

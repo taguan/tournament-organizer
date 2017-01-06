@@ -5,14 +5,22 @@
     <div class="panel-body">
         <form class="form-inline" ng-class="{'has-error' : error}">
             <div class="form-group">
-                <label for="startPosition">Players from position </label>
-                <input ng-model="position.from" type="number" class="form-control" id="startPosition">
+                <label for="nbrPerGroup">Nbr of players per group to select </label>
+                <select ng-model="selection.nbrPerGroup" class="form-control" id="nbrPerGroup">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="32">32</option>
+                    <option value="64">64</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="toPosition"> to position </label>
-                <input ng-model="position.to" type="number" class="form-control" id="toPosition">
+                <label for="startPosition"> starting at position </label>
+                <input ng-model="selection.startPosition" type="number" class="form-control" id="startPosition">
             </div>
-            <button ng-click="generateBracket(position.from, position.to) "class="btn btn-default">Generate bracket</button>
+            <button ng-click="generateBracket(selection.nbrPerGroup, selection.startPosition)" class="btn btn-default">Generate bracket</button>
         </form>
     </div>
 </div>

@@ -1,16 +1,17 @@
 angular.module('app').controller('bracketCreatorCtrl', [ '$scope', 'bracketsSrv', 'groupsSrv', function($scope, bracketsSrv, groupsSrv){
     $scope.error = false;
-    $scope.position = {
-        from : null,
-        to : null
+    $scope.selection = {
+        nbrPerGroup : null,
+        startPosition : null
     };
-    $scope.generateBracket = function(from, to){
+    $scope.generateBracket = function(nbrPerGroup, startPosition){
+        nbrPerGroup = parseInt(nbrPerGroup);
         $scope.error = false;
-        groupsSrv.getPlayersWithPosition(from, to).then(function(players){
-            if(players.length == 0){
+        groupsSrv.getGroupsWithSelectedPlayersAsync(nbrPerGroup, startPosition).then(function(groups){
+            if(groups.length == 0){
                 $scope.error = true;
             } else {
-                bracketsSrv.generateBracket(players);
+                bracketsSrv.generateBracket(groups, nbrPerGroup);
             }
         });
     }
