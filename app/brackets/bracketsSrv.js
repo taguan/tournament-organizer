@@ -1,7 +1,9 @@
-angular.module('app').factory('bracketsSrv', ['Restangular', '$q', function(Restangular, $q){
+angular.module('app').factory('bracketsSrv', ['localStorageService', function(localStorageService){
+
+    var all = localStorageService.get('brackets') || [];
+
     return {
-        all: [],
-        _allP: Restangular.all('brackets'),
+        all: all,
         /*
         Returns an array of games, a game being a 2-elements array being the index of the players
          */
@@ -35,32 +37,12 @@ angular.module('app').factory('bracketsSrv', ['Restangular', '$q', function(Rest
             return this._bracketSort(nextRound, playerCounter, maxCounter);
 
         },
-        findAll: function() {
-            var deferred = $q.defer();
-            if(this.all.length > 0){
-                deferred.resolve(this.all);
-                return deferred.promise;
-            }
-            var that = this;
-            this._allP.getList().then(function(brackets){
-                if(that.all.length > 0){
-                    deferred.resolve(that.all);
-                } else {
-                    that.all = brackets;
-                    deferred.resolve(brackets);
-                }
-            }, function(){
-                that.all = [];
-                deferred.resolve(that.all);
-            });
-            return deferred.promise;
-        },
         create: function(bracket){
             this.all.push(bracket);
             this.save();
         },
         save: function(){
-            this._allP.post(this.all);
+            localStorageService.set('brackets', this.all);
         },
         _copyBracket: function(arr) {
             var bracket = [];

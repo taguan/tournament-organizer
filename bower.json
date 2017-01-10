@@ -12,8 +12,8 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "lodash": "^4.6.1",
-    "restangular": "^1.5.2",
     "jquery-bracket": "^0.7.3",
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "angular-local-storage": "^0.5.2"
   }
 }

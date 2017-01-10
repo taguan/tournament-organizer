@@ -1,6 +1,5 @@
 angular.module('app').controller('groupsConfigsCtrl', ['$scope', 'groupsConfigsSrv', function($scope, groupsConfigsSrv){
     $scope.error = false;
-    groupsConfigsSrv.findAll();
     $scope.groupsConfigs = groupsConfigsSrv;
     $scope.addGroupsConfig = function(nbrPlayers, nbrGroups){
         $scope.error = !groupsConfigsSrv.create(nbrPlayers, nbrGroups);

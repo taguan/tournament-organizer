@@ -1,10 +1,6 @@
 'use strict';
 
-angular.module('app', ['restangular', 'ngRoute']);
-
-angular.module('app').config(['RestangularProvider', function(RestangularProvider){
-    RestangularProvider.setBaseUrl('/data/' + window.document.location.port || 80);
-}]);
+angular.module('app', ['ngRoute', 'LocalStorageModule']);
 
 angular.module('app').value('isPositiveNumber', function(nbrStr){
     if(!nbrStr) return false;

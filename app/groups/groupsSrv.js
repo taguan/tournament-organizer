@@ -1,7 +1,10 @@
-angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'tablesSrv', function(Restangular, $q, gamesSrv, tablesSrv){
+angular.module('app').factory('groupsSrv', ['gamesSrv', 'tablesSrv', 'localStorageService',
+    function(gamesSrv, tablesSrv, localStorageService){
+
+    var all = localStorageService.get('groups') || [];
+
     return {
-        all: [],
-        _allP: Restangular.all('groups'),
+        all: all,
         _findPlayer: function(group, player){
             for(var i = 0; i < group.players.length; i++){
                 if(group.players[i].name === player.name){
@@ -27,26 +30,6 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
                 }
             })
         },
-        findAll: function() {
-            var deferred = $q.defer();
-            if(this.all.length > 0){
-                deferred.resolve(this.all);
-                return deferred.promise;
-            }
-            var that = this;
-            this._allP.getList().then(function(groupsResp){
-                if(that.all.length > 0){
-                    deferred.resolve(that.all);
-                } else {
-                    that.all = groupsResp;
-                    deferred.resolve(groupsResp);
-                }
-            }, function(){
-                that.all = [];
-                deferred.resolve(that.all);
-            });
-            return deferred.promise;
-        },
         create: function(groups){
             this.all = groups;
             this.all.forEach(function(group){
@@ -57,10 +40,13 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
                     player.position = null;
                 });
             });
+            this.all.sort(function(a, b) {
+               return a.number < b.number ? -1 : 1;
+             });
             this.save();
         },
         save: function(){
-            this._allP.post(this.all);
+            localStorageService.set('groups', this.all);
         },
         modifyGameResults: function(group, game, p1Result, p2Result){
             var p1 = this._findPlayer(group, game.p1);
@@ -123,15 +109,8 @@ angular.module('app').factory('groupsSrv', ['Restangular', '$q', 'gamesSrv', 'ta
             tablesSrv.save();
             this.save();
         },
-        getGroupsWithSelectedPlayersAsync: function(nbrPerGroup, startPosition){
-            var deferred = $q.defer();
-            var that = this;
-            this.findAll().then(function(groups){
-                deferred.resolve(that.getGroupsWithSelectedPlayers(nbrPerGroup, startPosition, groups));
-            });
-            return deferred.promise;
-        },
-        getGroupsWithSelectedPlayers: function(nbrPerGroup, startPosition, groups){
+        getGroupsWithSelectedPlayers: function(nbrPerGroup, startPosition){
+            var groups = this.all;
             var groupsWithSelectedPlayers = [];
             groups.forEach(function(group){
                 var g = {

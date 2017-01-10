@@ -1,7 +1,9 @@
-angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Restangular, $q){
+angular.module('app').factory('genPlayersSrv', ['localStorageService', function(localStorageService){
+
+    var all = localStorageService.get('players') || [];
+
     return {
-        all: [],
-        _allP: Restangular.all('players'),
+        all: all,
         _getPlayerPosition: function(player){
             for(var i = 0; i < this.all.length; i++){
                 if(this.all[i].name === player.name){
@@ -10,17 +12,8 @@ angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Re
             }
             return -1;
         },
-        findAll: function() {
-            var deferred = $q.defer();
-            var that = this;
-            this._allP.getList().then(function(playersResp){
-                that.all = playersResp;
-                deferred.resolve(playersResp);
-            }, function(){
-                that.all = [];
-                deferred.resolve(that.all);
-            });
-            return deferred.promise;
+        save: function() {
+            localStorageService.set('players', this.all);
         },
         create: function(name, rank){
             if(!name || !rank) return (name || 'Missing name') + ' - ' + (rank || 'missing rank');
@@ -30,7 +23,7 @@ angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Re
                 this.all.splice(pos, 1);
             }
             this.all.push(player);
-            this._allP.post(this.all);
+            this.save();
             return null;
         },
         createAll: function(names, ranks){
@@ -53,11 +46,11 @@ angular.module('app').factory('genPlayersSrv', ['Restangular', '$q', function(Re
             var pos = this._getPlayerPosition(player);
             if(pos === -1) return;
             this.all.splice(pos, 1);
-            this._allP.post(this.all);
+            this.save();
         },
         deleteAll: function() {
             this.all = [];
-            this._allP.post(this.all);
+            this.save();
         }
     }
 }]);

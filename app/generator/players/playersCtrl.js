@@ -1,6 +1,5 @@
 angular.module('app').controller('genPlayersCtrl', ['$scope', 'genPlayersSrv', function($scope, genPlayersSrv){
     $scope.errors = [];
-    genPlayersSrv.findAll();
     $scope.players = genPlayersSrv;
     $scope.addPlayers = function(name, rank){
         $scope.errors = genPlayersSrv.createAll(name, rank);

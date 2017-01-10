@@ -7,12 +7,11 @@ angular.module('app').controller('bracketCreatorCtrl', [ '$scope', 'bracketsSrv'
     $scope.generateBracket = function(nbrPerGroup, startPosition){
         nbrPerGroup = parseInt(nbrPerGroup);
         $scope.error = false;
-        groupsSrv.getGroupsWithSelectedPlayersAsync(nbrPerGroup, startPosition).then(function(groups){
-            if(groups.length == 0){
-                $scope.error = true;
-            } else {
-                bracketsSrv.generateBracket(groups, nbrPerGroup);
-            }
-        });
+        var groups = groupsSrv.getGroupsWithSelectedPlayers(nbrPerGroup, startPosition);
+        if(groups.length == 0){
+            $scope.error = true;
+        } else {
+            bracketsSrv.generateBracket(groups, nbrPerGroup);
+        }
     }
 }]);

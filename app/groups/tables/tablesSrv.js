@@ -1,27 +1,9 @@
-angular.module('app').factory('tablesSrv', ['Restangular', '$q', function(Restangular, $q){
+angular.module('app').factory('tablesSrv', ['localStorageService', function(localStorageService){
+
+    var all = localStorageService.get('tables') || [];
+
     return {
-        all: [],
-        _allP: Restangular.all('tables'),
-        findAll: function() {
-            var deferred = $q.defer();
-            if(this.all.length > 0){
-                deferred.resolve(this.all);
-                return deferred.promise;
-            }
-            var that = this;
-            this._allP.getList().then(function(tables){
-                if(that.all.length > 0){
-                    deferred.resolve(that.all);
-                } else {
-                    that.all = tables;
-                    deferred.resolve(tables);
-                }
-            }, function(){
-                that.all = [];
-                deferred.resolve(that.all);
-            });
-            return deferred.promise;
-        },
+        all: all,
         generateTables: function(nbrOfTables){
             this.all = [];
             for(var i = 0; i < nbrOfTables; i++){
@@ -30,7 +12,7 @@ angular.module('app').factory('tablesSrv', ['Restangular', '$q', function(Restan
             this.save();
         },
         save: function(){
-            this._allP.post(this.all);
+            localStorageService.set('tables', this.all);
         },
         bookTable: function(tableNumber){
             this.all[tableNumber - 1].free = false;

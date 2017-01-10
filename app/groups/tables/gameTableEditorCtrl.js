@@ -1,5 +1,4 @@
 angular.module('app').controller('gameTableEditorCtrl', ['$scope', 'groupsSrv', 'tablesSrv', function($scope, groupsSrv, tablesSrv){
-    tablesSrv.findAll();
     $scope.tables = tablesSrv;
     $scope.showModal = false;
     $scope.toggleModal = function(){

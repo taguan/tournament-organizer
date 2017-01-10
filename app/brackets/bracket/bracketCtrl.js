@@ -1,5 +1,4 @@
 angular.module('app').controller('bracketCtrl', [ '$scope', 'tablesSrv', function($scope, tablesSrv){
-    tablesSrv.findAll();
     $scope.tables = tablesSrv;
     $scope.showModal = false;
     $scope.toggleModal = function(){
