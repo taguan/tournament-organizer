@@ -14,7 +14,7 @@
 ### Encode players
 Multiple players can be entered at once (one by line), just copy and paste from an Excel sheet.
 
-![players.png]((https://s30.postimg.org/hrid74cvl/players.png)
+![players.png](https://s30.postimg.org/hrid74cvl/players.png)
 
 Ranking can be anything from a specific ranking system in your competition to a generic seed number
 
