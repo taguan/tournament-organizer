@@ -18,6 +18,40 @@ Multiple players can be entered at once (one by line), just copy and paste from 
 
 Ranking can be anything from a specific ranking system in your competition to a generic seed number
 
+### Tables
+
+This application was originally created to manage table tennis tournaments. Therefore, you can optionally provide the number of tables you have at your disposal. You will be able to attribute a table for every game, and the system will keep track on what tables are available at any time. This mechanism is fully optional.
+
+![tables.png](https://s28.postimg.org/ozt1i73dp/tables.png)
+
+
+### Groups definition
+
+Define the numbers of groups you want to be generated, and the number of players to be included in each group.
+
+![groupsdef.png](https://s24.postimg.org/e8dvx3ihx/groupsdef.png)
+
+
+## Group stage
+
+Display your groups and the games to be played. Encode results, allocate tables, swap players between groups.
+
+**Do not forget** to give the final position of each group member at then end of the group stage in order to make the bracket generation work properly!
+
+![groups.png](https://s29.postimg.org/mrmzkqwzb/groups.png)
+
+
+## Bracket stage
+
+Single or double elimination bracket. Choose how many players by group you want to select and from which position you want to select them.
+
+Brackets are optimized such that players from same groups meet as late as possible and such higher seeds meet late as well.
+
+It is possible to create multiple brackets (for instance, in case you have groups of 4 players, you can create a winner bracket with players in position 1 and 2 and looser bracket with players in position 3 and 4).
+
+By clicking on a game, you can modify the players, the score and the attributed table.
+
+![brackets.png](https://s28.postimg.org/ckycvafz1/brackets.png)
 
 ## Usage
 
