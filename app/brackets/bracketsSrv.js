@@ -54,11 +54,11 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
         _getPlayer: function(groups, nbrPerGroup, bracketPosition, offset, numberOfSlotsPerSubBracket) {
             var groupIndex = (bracketPosition + offset) % numberOfSlotsPerSubBracket;
             if(groupIndex >= groups.length) {
-                return "Bye";
+                return null; //null will result in a Bye
             }
             var player = groups[groupIndex].players[(bracketPosition) % nbrPerGroup];
             if(!player) {
-                return "Bye";
+                return null; //null will result in a Bye
             }
             return player.name + ' ' + player.rank;
         },
@@ -100,25 +100,16 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
 
             //concatenate subBrackets
             var firstRoundGames = [];
-            var firstGamesResults = [];
             for(i = 0; i < subBracketsOrdered.length; i++){
                 for(var j = 0; j < subBracketsOrdered[i].bracket.length; j++) {
                     var game = subBracketsOrdered[i].bracket[j];
                     firstRoundGames.push(game);
-                    if(game[1] === 'Bye'){
-                        firstGamesResults.push([3,0]);
-                    }else if(game[0] === 'Bye'){
-                        firstGamesResults.push([0, 3]);
-                    } else{
-                        firstGamesResults.push([null,null]);
-                    }
                 }
 
             }
             this.create({
                 data : {
-                    teams : firstRoundGames,
-                    results: firstGamesResults
+                    teams : firstRoundGames
                 }
             });
             return firstRoundGames;
