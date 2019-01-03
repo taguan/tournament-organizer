@@ -7,3 +7,4 @@ tmp
 .idea
 npm-debug.json
 tournamentorganizer-*
+*.iml

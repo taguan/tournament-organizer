@@ -17,14 +17,19 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
 
             var editFn = function(container, playerName, callback){
                 var tableNumber = null;
-                if(playerName.search(tablePattern) > -1){
+
+                // search if the player name refer to a table number (ends with (TXX))
+                if(!!playerName && playerName.search(tablePattern) > -1){
+                    // extract the table number
                     tableNumber = playerName.match(tablePattern)[1];
+                    // extract the true player name (without table number)
                     playerName = playerName.replace(tablePattern, "");
                 }
                 scope.$apply(function(){
                     scope.playerInfo.tableNumber = tableNumber;
                     scope.playerInfo.name = playerName;
-                    scope.newPlayerName = playerName;
+                    scope.formData.newPlayerName = playerName;
+                    scope.formData.selectedTableNumber = tableNumber;
                     scope.toggleModal();
                     scope.lastCallback = callback;
                 });
@@ -35,6 +40,9 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
                     return;
                 }
                 var playerName = scope.playerInfo.name;
+                if(!playerName) {
+                    scope.lastCallback(null);
+                }
                 if(tableNumber > 0){
                     var tableStr = "(T" + tableNumber + ") ";
                     if(playerName.search(tablePattern) > -1){
@@ -60,6 +68,8 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
                         newName = "(T" + scope.playerInfo.tableNumber + ") " + newName;
                     }
                     scope.lastCallback(newName);
+                } else {
+                    scope.lastCallback(null); // for Bye
                 }
 
             });
@@ -69,7 +79,22 @@ angular.module('app').directive('trnmtBracket', ['bracketsSrv', function(bracket
                 save : saveFn,
                 decorator: {
                     edit: editFn,
-                    render: function(container, name){container.append(name)}
+                    render: function(container, name, score, state){
+                        switch(state) {
+                            case "empty-bye":
+                              container.append("Bye");
+                              return;
+                            case "empty-tbd":
+                              container.append("-");
+                              return;
+
+                            case "entry-no-score":
+                            case "entry-default-win":
+                            case "entry-complete":
+                              container.append(name);
+                              return;
+                          }
+                    }
                 }
             });
         }

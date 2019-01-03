@@ -6,8 +6,11 @@ angular.module('app').controller('bracketCtrl', [ '$scope', 'tablesSrv', functio
     };
     $scope.playerInfo = {
         name: null,
-        tableNumber: null,
-        lastCallback: null
+        tableNumber: null
+    };
+    $scope.formData = {
+        newPlayerName: null,
+        selectedTableNumber: null
     };
     $scope.freeTable = function(tableNumber){
         tablesSrv.freeTable(tableNumber);

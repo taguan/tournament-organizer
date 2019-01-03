@@ -5,20 +5,20 @@
     </p>
     <form role="form">
         <div class="form-group">
-            <label for="availableTables">Player name</label>
-            <input type="text" class="form-control" id="playerNameInput" ng-model="newPlayerName" />
+            <label for="playerNameInput">Player name</label>
+            <input type="text" class="form-control" id="playerNameInput" ng-model="formData.newPlayerName" />
         </div>
-        <button class="btn btn-primary" ng-click="modifyPlayerName(newPlayerName)">Modify player name</button>
+        <button class="btn btn-primary" ng-click="modifyPlayerName(formData.newPlayerName)">Modify player name</button>
     </form>
     <form role="form">
         <div class="form-group">
             <label for="availableTables">Available tables</label>
-            <select class="form-control" id="availableTables" ng-model="selectedTableNumber"
+            <select class="form-control" id="availableTables" ng-model="formData.selectedTableNumber"
                     ng-options='table.number as ("Table " + table.number) for table in tables.all | isTableFree'>
 
             </select>
         </div>
-        <button class="btn btn-primary" ng-click="bookTable(selectedTableNumber)">Book table</button>
+        <button class="btn btn-primary" ng-click="bookTable(formData.selectedTableNumber)">Book table</button>
         <button class="btn btn-info" ng-show="playerInfo.tableNumber" ng-click="freeTable(playerInfo.tableNumber)">Free table</button>
     </form>
 </trnmt-modal>
