@@ -62,10 +62,11 @@ describe('getGroupsWithSelectedPlayers', function(){
 
     beforeEach(inject(function GetDependencies(groupsSrv){
         service = groupsSrv;
+        service.all = data;
     }));
 
     it('should returns sorted groups', function () {
-        var groups = service.getGroupsWithSelectedPlayers(2,2, data);
+        var groups = service.getGroupsWithSelectedPlayers(2,2);
         expect(groups.length).toBe(3);
         expect(groups[0].group).toBe(1);
         expect(groups[1].group).toBe(2);
@@ -73,7 +74,7 @@ describe('getGroupsWithSelectedPlayers', function(){
     });
 
     it('should filter and sort players', function () {
-        var groups = service.getGroupsWithSelectedPlayers(2,2, data);
+        var groups = service.getGroupsWithSelectedPlayers(2,2);
         expect(groups.length).toBe(3);
 
         expect(groups[0].players.length).toBe(1);
