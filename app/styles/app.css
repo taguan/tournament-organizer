@@ -28,3 +28,7 @@
   content: "";
   padding: 0;
 }
+
+div.jQBracket .team {
+  background-color: #71bd63;
+}

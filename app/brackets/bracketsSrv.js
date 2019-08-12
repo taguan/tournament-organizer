@@ -51,39 +51,63 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
             }
             return bracket;
         },
-        _getPlayer: function(groups, nbrPerGroup, bracketPosition, offset, numberOfSlotsPerSubBracket) {
-            var groupIndex = (bracketPosition + offset) % numberOfSlotsPerSubBracket;
-            if(groupIndex >= groups.length) {
-                return null; //null will result in a Bye
-            }
-            var player = groups[groupIndex].players[(bracketPosition) % nbrPerGroup];
-            if(!player) {
-                return null; //null will result in a Bye
+        _getPlayer: function(roster, bracketPosition) {
+            var player = roster[bracketPosition];
+            if (!player) {
+                return null;
             }
             return player.name + ' ' + player.rank;
         },
-        _populateBracket: function(groups, nbrPerGroup, subBracket, numberOfSlotsPerSubBracket) {
-            var offset = subBracket.label;
+        _populateBracket: function(roster, subBracket) {
             for(var i = 0; i < subBracket.bracket.length; i++) {
                 var game = subBracket.bracket[i];
-                game[0] = this._getPlayer(groups, nbrPerGroup, game[0], offset, numberOfSlotsPerSubBracket);
-                game[1] = this._getPlayer(groups, nbrPerGroup, game[1], offset, numberOfSlotsPerSubBracket);
+                game[0] = this._getPlayer(roster, game[0]);
+                game[1] = this._getPlayer(roster, game[1]);
             }
         },
         generateBracket: function(groups, nbrPerGroup){
 
             //Determine how the groups will be organized in sub-brackets
+            var numberOfSelectedPlayers = groups.length * nbrPerGroup;
             var numberOfSlotsPerSubBracket = Math.pow(2, Math.ceil(Math.log(groups.length)/Math.log(2)));
             var subBracketGames = this.bracketSort(numberOfSlotsPerSubBracket);
+            var numberOfSubBrackets = Math.ceil(Math.pow(2, Math.ceil(Math.log(numberOfSelectedPlayers)/Math.log(2))) / numberOfSlotsPerSubBracket)
+
+            //to generate the sub brackets
+            //assign players to sub brackets: for each group, each selected player goes to a different sub bracket (sorted by position, they might be doublons) % number of sub brackets
+            //this gives you a seeding list for each sub bracket (the ordered array index gives you the seed). If there is no seed, put bye
+            //you can then generate the sub bracket following the subbracketgames
+            var subBracketsRoster = [];
+            for(var i = 0; i < numberOfSubBrackets; i++) {
+                subBracketsRoster[i] = [];
+            }
+            var offset = 0;
+            groups.forEach(function(group) {
+                var subBracketCounter = offset;
+                for(var i = 0; i < nbrPerGroup; i++) {
+                    subBracketsRoster[subBracketCounter % numberOfSubBrackets].push(group.players[i]);
+                    subBracketCounter++;
+                }
+                offset++;
+            });
+            subBracketsRoster.forEach(function(roster) {
+                // sort by position
+                roster.sort(function(a, b) {
+                    if(a.position < b.position) {
+                        return -1;
+                    }
+                    return 1;
+                });
+            });
 
             //Create "nbrPerGroup" subBrackets, so every selected players per group is in a different sub-bracket
             var subBracketsArr = [];
-            for(var i = 0; i < nbrPerGroup; i++) {
+            for(var i = 0; i < numberOfSubBrackets; i++) {
                 subBracketsArr[i] = {
                     label: i,
                     bracket: this._copyBracket(subBracketGames)
                 };
-                this._populateBracket(groups, nbrPerGroup, subBracketsArr[i], numberOfSlotsPerSubBracket);
+                this._populateBracket(subBracketsRoster[i], subBracketsArr[i]);
             }
 
             var subBracketsOrdered = [];
@@ -91,7 +115,7 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
             if(nbrPerGroup === 1) {
                 subBracketsOrdered.push(subBracketsArr[0]);
             } else {
-                var subBracketOrdering = this.bracketSort(nbrPerGroup);
+                var subBracketOrdering = this.bracketSort(numberOfSubBrackets);
                 for(i = 0; i < subBracketOrdering.length; i++) {
                     subBracketsOrdered[2*i] = subBracketsArr[subBracketOrdering[i][0]];
                     subBracketsOrdered[2*i+1] = subBracketsArr[subBracketOrdering[i][1]];
