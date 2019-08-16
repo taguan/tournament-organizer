@@ -31,6 +31,24 @@ describe('generateBracket', function(){
         service = bracketsSrv;
     }));
 
+    it('should work with a bracket of 2 players', function() {
+        var brackets = service.generateBracket(      [{
+                                            number: 1,
+                                            players: [
+                                                {
+                                                    name : 'A1',
+                                                    position : 1
+                                                },
+                                                {
+                                                    name : 'A2',
+                                                    position : 2
+                                                }
+                                                ]}],2);
+         var flattenedBracket = brackets.flat(2);
+         //this checks that there is no duplicate players (if there are there will be more elements in the array than in the Set)
+         expect(flattenedBracket.length).toBe(new Set(flattenedBracket).size);
+    });
+
     it('should not duplicate player in a bracket', function () {
         // two brackets of 7 players, selecting 4 on each
         var brackets = service.generateBracket(      [{

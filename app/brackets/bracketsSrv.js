@@ -70,6 +70,10 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
             //Determine how the groups will be organized in sub-brackets
             var numberOfSelectedPlayers = groups.length * nbrPerGroup;
             var numberOfSlotsPerSubBracket = Math.pow(2, Math.ceil(Math.log(groups.length)/Math.log(2)));
+            if (numberOfSlotsPerSubBracket == 1) {
+                // small hack to avoid having sub brackets with a single slot, which makes the whole algorithm fail
+                numberOfSlotsPerSubBracket = 2;
+            }
             var subBracketGames = this.bracketSort(numberOfSlotsPerSubBracket);
             var numberOfSubBrackets = Math.ceil(Math.pow(2, Math.ceil(Math.log(numberOfSelectedPlayers)/Math.log(2))) / numberOfSlotsPerSubBracket)
 
@@ -114,6 +118,8 @@ angular.module('app').factory('bracketsSrv', ['localStorageService', function(lo
             //order the sub-brackets
             if(nbrPerGroup === 1) {
                 subBracketsOrdered.push(subBracketsArr[0]);
+            } else if (numberOfSubBrackets == 1) {
+                subBracketsOrdered = subBracketsArr;
             } else {
                 var subBracketOrdering = this.bracketSort(numberOfSubBrackets);
                 for(i = 0; i < subBracketOrdering.length; i++) {
